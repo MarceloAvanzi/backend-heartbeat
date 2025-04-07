@@ -1,0 +1,17 @@
+services:
+  heartbeat:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: heartbeat-service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3001"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 10s
